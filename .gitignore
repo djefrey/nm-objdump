@@ -1,0 +1,5 @@
+**/*.o
+nm
+objdump
+vgcore*
+**/*.a
