@@ -8,7 +8,10 @@
 COMMON_SRC			=	src/common/elf.c				\
 						src/common/section.c			\
 						src/common/strtab.c
-NM_SRC				=	src/nm/main.c
+
+NM_SRC				=	src/nm/main.c					\
+						src/nm/symbols.c				\
+						src/nm/icon.c
 
 INC_DIR				=	./include
 
