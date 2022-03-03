@@ -17,6 +17,7 @@ static int my_nm(const char *path)
     if (!hdr || !is_valid_elf(hdr))
         return 84;
     print_symbols_from_elf(hdr);
+    return 0;
 }
 
 static int my_nm_on_files(const char **path, int nb)
