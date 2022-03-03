@@ -1,6 +1,6 @@
 **/*.o
-./nm
-./objdump
+my_nm
+my_objdump
 vgcore*
 **/*.a
 .vscode
