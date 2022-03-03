@@ -12,24 +12,30 @@
 #include <sys/mman.h>
 #include "common.h"
 
-Elf64_Ehdr *open_elf_file(const char *path)
+file_t open_file(const char *path)
 {
     int fd = open(path, O_RDONLY);
-    Elf64_Ehdr *hdr = NULL;
+    void *file = NULL;
     struct stat s;
 
     if (fd == -1)
-        return NULL;
+        return (file_t) {-1, NULL, 0};
     fstat(fd, &s);
-    hdr = mmap(NULL, s.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
-    if (hdr == (void*) -1)
-        return NULL;
-    return hdr;
+    file = mmap(NULL, s.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
+    if (file == (void*) -1)
+        return (file_t) {-1, NULL, 0};
+    return (file_t) {fd, file, s.st_size};
 }
 
-int is_valid_elf(Elf64_Ehdr *hdr)
+void close_file(file_t *file)
 {
-    u_char *magic = hdr->e_ident;
+    munmap(file->data, file->size);
+    close(file->fd);
+}
+
+int is_valid_elf(void *file)
+{
+    u_char *magic = ((Elf64_Ehdr*) file)->e_ident;
 
     return (magic[0] == ELFMAG0 && magic[1] == ELFMAG1
          && magic[2] == ELFMAG2 && magic[3] == ELFMAG3);

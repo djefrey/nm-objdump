@@ -6,6 +6,7 @@
 ##
 
 COMMON_SRC			=	src/common/elf.c				\
+						src/common/archive.c			\
 						src/common/section.c			\
 						src/common/strtab.c
 
@@ -13,7 +14,8 @@ NM_SRC				=	src/nm/main.c					\
 						src/nm/symbols.c				\
 						src/nm/icon.c
 
-OBJDUMP_SRC			=	src/objdump/main.c
+OBJDUMP_SRC			=	src/objdump/main.c				\
+						src/objdump/infos.c
 
 INC_DIR				=	./include
 
@@ -36,7 +38,10 @@ nm: $(COMMON_OBJ) $(NM_OBJ)
 
 objdump: $(COMMON_OBJ) $(OBJDUMP_OBJ)
 	make -C $(MYLIB) all
-	gcc $(CFLAGS) -o $(OBJDUMP_NAME) $(COMMON_OBJ) $(OBJDUMP_OBJ) -L$(MYLIB) -lmy
+	gcc $(CFLAGS) -o $(OBJDUMP_NAME) $(COMMON_OBJ) $(OBJDUMP_OBJ) -L$(MYLIB) -lmy -lbfd
+
+debug: CFLAGS += -g
+debug: re
 
 clean:
 	make -C $(MYLIB) clean

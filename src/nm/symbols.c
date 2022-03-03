@@ -59,7 +59,7 @@ void print_symbols(Elf64_Ehdr *hdr, list_t *symbols)
     for (; symbols; symbols = symbols->next) {
         symdata = symbols->data;
         icon = get_symbol_icon(hdr, symdata->symbol);
-        if (symdata->symbol->st_value == 0)
+        if (symdata->symbol->st_value == 0 && (icon != 't' && icon != 'T'))
             printf("                 %c %s\n", icon, symdata->name);
         else
             printf("%016x %c %s\n", symdata->symbol->st_value, icon, symdata->name);

@@ -47,6 +47,7 @@ static char get_section_progbits_icon(Elf64_Shdr *shdr, int is_local)
         else
             return is_local ? 'r' : 'R';
     }
+    return 0;
 }
 
 static char get_section_icon(Elf64_Ehdr *hdr, Elf64_Sym *symbol, int is_local)
@@ -84,6 +85,7 @@ static char get_section_icon(Elf64_Ehdr *hdr, Elf64_Sym *symbol, int is_local)
     }
     if (!strcmp(name, ".init_array") || !strcmp(name, ".fini_array"))
         return is_local ? 't' : 'T';
+    return 0;
 }
 
 static char get_type_icon(Elf64_Sym *symbol, int is_local)

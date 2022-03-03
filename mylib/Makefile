@@ -18,7 +18,7 @@ NAME		=	libmy.a
 all:	$(NAME)
 
 $(NAME):	$(OBJ)
-	ar -crs $(NAME) $(OBJ)
+	ar -cr $(NAME) $(OBJ)
 
 clean:
 	rm -rf $(OBJ)
