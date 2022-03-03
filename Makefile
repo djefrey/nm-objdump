@@ -25,8 +25,8 @@ COMMON_OBJ			=	$(COMMON_SRC:.c=.o)
 NM_OBJ				=	$(NM_SRC:.c=.o)
 OBJDUMP_OBJ			=	$(OBJDUMP_SRC:.c=.o)
 
-NM_NAME				=	nm
-OBJDUMP_NAME		=	objdump
+NM_NAME				=	my_nm
+OBJDUMP_NAME		=	my_objdump
 
 all: $(NM_NAME) $(OBJDUMP_NAME)
 
