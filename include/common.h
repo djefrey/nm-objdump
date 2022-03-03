@@ -11,6 +11,7 @@
 #include <elf.h>
 
 Elf64_Ehdr *open_elf_file(const char *path);
+int is_valid_elf(Elf64_Ehdr *hdr);
 
 Elf64_Shdr *get_section_header(Elf64_Ehdr *hdr, Elf64_Half idx);
 const char *get_section_name(Elf64_Shdr *shdr, const char *sec_strtab);

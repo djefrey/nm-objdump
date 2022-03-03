@@ -26,3 +26,11 @@ Elf64_Ehdr *open_elf_file(const char *path)
         return NULL;
     return hdr;
 }
+
+int is_valid_elf(Elf64_Ehdr *hdr)
+{
+    u_char *magic = hdr->e_ident;
+
+    return (magic[0] == ELFMAG0 && magic[1] == ELFMAG1
+         && magic[2] == ELFMAG2 && magic[3] == ELFMAG3);
+}
