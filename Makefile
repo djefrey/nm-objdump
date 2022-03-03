@@ -28,13 +28,13 @@ OBJDUMP_OBJ			=	$(OBJDUMP_SRC:.c=.o)
 NM_NAME				=	my_nm
 OBJDUMP_NAME		=	my_objdump
 
-all: $(NM_NAME) $(OBJDUMP_NAME)
+all: nm objdump
 
-$(NM_NAME): $(COMMON_OBJ) $(NM_OBJ)
+nm: $(COMMON_OBJ) $(NM_OBJ)
 	make -C $(MYLIB) all
 	gcc $(CFLAGS) -o $(NM_NAME) $(COMMON_OBJ) $(NM_OBJ) -L$(MYLIB) -lmy
 
-$(OBJDUMP_NAME): $(COMMON_OBJ) $(OBJDUMP_OBJ)
+objdump: $(COMMON_OBJ) $(OBJDUMP_OBJ)
 	make -C $(MYLIB) all
 	gcc $(CFLAGS) -o $(OBJDUMP_NAME) $(COMMON_OBJ) $(OBJDUMP_OBJ) -L$(MYLIB) -lmy
 
