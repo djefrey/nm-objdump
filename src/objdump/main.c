@@ -50,9 +50,10 @@ static int my_objdump(const char *path)
     int ret = 0;
 
     if (file.data) {
-        if (is_valid_elf(file.data))
+        if (is_valid_elf(file.data)) {
             print_infos(path, file.data);
-        else if (is_valid_archive(&file))
+            dump_sections(file.data);
+        } else if (is_valid_archive(&file))
             ret = my_objdump_on_archive(&file);
         else
             ret = 84;

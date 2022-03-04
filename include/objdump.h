@@ -11,3 +11,4 @@
 #include "flags.h"
 
 void print_infos(const char *name, Elf64_Ehdr *hdr);
+void dump_sections(Elf64_Ehdr *hdr);

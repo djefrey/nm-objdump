@@ -15,7 +15,8 @@ NM_SRC				=	src/nm/main.c					\
 						src/nm/icon.c
 
 OBJDUMP_SRC			=	src/objdump/main.c				\
-						src/objdump/infos.c
+						src/objdump/infos.c				\
+						src/objdump/dump.c
 
 INC_DIR				=	./include
 
