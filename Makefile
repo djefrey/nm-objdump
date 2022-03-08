@@ -39,7 +39,7 @@ nm: $(COMMON_OBJ) $(NM_OBJ)
 
 objdump: $(COMMON_OBJ) $(OBJDUMP_OBJ)
 	make -C $(MYLIB) all
-	gcc $(CFLAGS) -o $(OBJDUMP_NAME) $(COMMON_OBJ) $(OBJDUMP_OBJ) -L$(MYLIB) -lmy -lbfd
+	gcc $(CFLAGS) -o $(OBJDUMP_NAME) $(COMMON_OBJ) $(OBJDUMP_OBJ) -L$(MYLIB) -lmy
 
 debug: CFLAGS += -g
 debug: re
