@@ -50,7 +50,7 @@ void dump_sections(Elf64_Ehdr *hdr)
 
     for (size_t i = 0; i < sec_nb; i++) {
         shdr = get_section_header(hdr, i);
-        if (shdr->sh_size == 0)
+        if (shdr->sh_size == 0 || shdr->sh_type == SHT_NOBITS)
             continue;
         printf("Contends of section %s:\n", get_section_name(shdr, sec_strtab));
         dump_section(hdr, shdr);
