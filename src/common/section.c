@@ -40,5 +40,4 @@ Elf64_Shdr *get_section_by_name(Elf64_Ehdr *hdr, const char *name)
             return shdr;
     }
     return NULL;
-
 }

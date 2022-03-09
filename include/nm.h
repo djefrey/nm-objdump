@@ -20,3 +20,4 @@ list_t *get_symbols(Elf64_Sym *symbols, size_t nb_symbols, const char *strtab);
 void print_symbols(Elf64_Ehdr *hdr, list_t *symbols);
 
 char get_symbol_icon(Elf64_Ehdr *hdr, Elf64_Sym *symbol);
+char get_section_icon(Elf64_Ehdr *hdr, Elf64_Sym *symbol, int is_local);

@@ -11,9 +11,9 @@
 #include "common.h"
 #include "objdump.h"
 
-static const int FLAGS_NB = 9;
+const int FLAGS_NB = 9;
 
-static const int FLAGS_VALUE[] = {
+const int FLAGS_VALUE[] = {
     HAS_RELOC,
     EXEC_P,
     HAS_LINENO,
@@ -25,7 +25,7 @@ static const int FLAGS_VALUE[] = {
     D_PAGED,
 };
 
-static const char *FLAGS_NAME[] = {
+const char *FLAGS_NAME[] = {
     "HAS_RELOC",
     "EXEC_P",
     "HAS_LINENO",
@@ -37,23 +37,29 @@ static const char *FLAGS_NAME[] = {
     "D_PAGED",
 };
 
+static void check_hdr_type(Elf64_Ehdr *hdr, int *flags)
+{
+    switch (hdr->e_type) {
+        case ET_EXEC:
+            *flags |= EXEC_P;
+            break;
+        case ET_DYN:
+            *flags |= DYNAMIC;
+            break;
+    }
+}
+
 static int get_flags(Elf64_Ehdr *hdr)
 {
     int nb_sections = hdr->e_shnum;
     int flags = 0;
     Elf64_Shdr *shdr;
 
-    switch (hdr->e_type) {
-        case ET_EXEC:
-            flags |= EXEC_P;
-            break;
-        case ET_DYN:
-            flags |= DYNAMIC;
-            break;
-    }
+    check_hdr_type(hdr, &flags);
     for (int i = 0; i < nb_sections; i++) {
         shdr = get_section_header(hdr, i);
-        if (shdr->sh_type == SHT_REL || (!(flags & EXEC_P) && shdr->sh_type == SHT_RELA))
+        if (shdr->sh_type == SHT_REL
+        || (!(flags & EXEC_P) && shdr->sh_type == SHT_RELA))
             flags |= HAS_RELOC;
         if (shdr->sh_type == SHT_SYMTAB)
             flags |= HAS_SYMS;

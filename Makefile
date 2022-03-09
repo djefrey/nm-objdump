@@ -14,6 +14,7 @@ COMMON_SRC			=	src/common/elf.c				\
 NM_SRC				=	src/nm/main.c					\
 						src/nm/symbols.c				\
 						src/nm/icon.c					\
+						src/nm/icon_2.c					\
 						src/nm/name.c
 
 OBJDUMP_SRC			=	src/objdump/main.c				\

@@ -12,15 +12,18 @@
 
 void print_errno(const char *file)
 {
-    fprintf(stderr, "%s: %s: %s\n", get_program_name(), file, strerror(errno));
+    fprintf(stderr, "%s: %s: %s\n",
+    get_program_name(), file, strerror(errno));
 }
 
 void print_no_such_file(const char *file)
 {
-    fprintf(stderr, "%s: %s: No such file\n", get_program_name(), file);
+    fprintf(stderr, "%s: %s: No such file\n",
+    get_program_name(), file);
 }
 
 void print_invalid_format(const char *file)
 {
-    fprintf(stderr, "%s: %s: file format not recognized\n", get_program_name(), file);
+    fprintf(stderr, "%s: %s: file format not recognized\n",
+    get_program_name(), file);
 }
