@@ -35,3 +35,9 @@ Elf64_Shdr *get_section_by_name(Elf64_Ehdr *hdr, const char *name);
 
 const char *get_section_strtab(Elf64_Ehdr *hdr);
 const char *get_strtab(Elf64_Ehdr *hdr);
+
+const char *get_program_name(void);
+
+void print_errno(const char *file);
+void print_no_such_file(const char *file);
+void print_invalid_format(const char *file);

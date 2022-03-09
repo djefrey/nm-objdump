@@ -56,8 +56,10 @@ static int my_nm(const char *path)
             print_symbols_from_elf(file.data);
         else if (is_valid_archive(&file))
             ret = my_nm_on_archive(&file);
-        else
+        else {
+            print_invalid_format(path);
             ret = 84;
+        }
         close_file(&file);
         return ret;
     }
@@ -86,7 +88,7 @@ static int my_nm_on_files(const char **path, int nb)
 int main(int ac, const char **av)
 {
     if (ac == 1)
-        return my_nm("./a.out");
+        return my_nm("a.out");
     else
         return my_nm_on_files(av + 1, ac - 1);
 }

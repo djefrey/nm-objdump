@@ -8,15 +8,18 @@
 COMMON_SRC			=	src/common/elf.c				\
 						src/common/archive.c			\
 						src/common/section.c			\
-						src/common/strtab.c
+						src/common/strtab.c				\
+						src/common/error.c
 
 NM_SRC				=	src/nm/main.c					\
 						src/nm/symbols.c				\
-						src/nm/icon.c
+						src/nm/icon.c					\
+						src/nm/name.c
 
 OBJDUMP_SRC			=	src/objdump/main.c				\
 						src/objdump/infos.c				\
-						src/objdump/dump.c
+						src/objdump/dump.c				\
+						src/objdump/name.c
 
 INC_DIR				=	./include
 

@@ -18,12 +18,16 @@ file_t open_file(const char *path)
     void *file = NULL;
     struct stat s;
 
-    if (fd == -1)
+    if (fd == -1) {
+        print_no_such_file(path);
         return (file_t) {-1, NULL, 0};
+    }
     fstat(fd, &s);
     file = mmap(NULL, s.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
-    if (file == (void*) -1)
+    if (file == (void*) -1) {
+        print_errno(path);
         return (file_t) {-1, NULL, 0};
+    }
     return (file_t) {fd, file, s.st_size};
 }
 
