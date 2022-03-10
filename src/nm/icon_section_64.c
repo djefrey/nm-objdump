@@ -8,23 +8,7 @@
 #include <string.h>
 #include "nm.h"
 
-const int SECTIONS_COUNT = 5;
-const char *SECTIONS_NAME[] = {
-    ".bss",
-    ".data",
-    ".text",
-    ".rodata",
-    ".debug",
-};
-const char SECTIONS_ICON[] = {
-    'B',
-    'D',
-    'T',
-    'R',
-    'N',
-};
-
-static char get_section_progbits_icon(Elf64_Shdr *shdr, int is_local)
+static char get_section_progbits_icon_64(Elf64_Shdr *shdr, int is_local)
 {
     if (shdr->sh_flags & SHF_ALLOC) {
         if (shdr->sh_flags & SHF_WRITE)
@@ -37,7 +21,7 @@ static char get_section_progbits_icon(Elf64_Shdr *shdr, int is_local)
     return 0;
 }
 
-static char get_symbol_ndx_icon(Elf64_Sym *symbol, int is_local)
+static char get_symbol_ndx_icon_64(Elf64_Sym *symbol, int is_local)
 {
     switch (symbol->st_shndx) {
         case SHN_ABS:
@@ -50,7 +34,7 @@ static char get_symbol_ndx_icon(Elf64_Sym *symbol, int is_local)
     return 0;
 }
 
-static char get_section_type_icon(Elf64_Shdr *shdr, int is_local)
+static char get_section_type_icon_64(Elf64_Shdr *shdr, int is_local)
 {
     switch (shdr->sh_type) {
         case SHT_DYNAMIC:
@@ -60,23 +44,23 @@ static char get_section_type_icon(Elf64_Shdr *shdr, int is_local)
                 return is_local ? 'b' : 'B';
             break;
         case SHT_PROGBITS:
-            return get_section_progbits_icon(shdr, is_local);
+            return get_section_progbits_icon_64(shdr, is_local);
     }
     return 0;
 }
 
-char get_section_icon(Elf64_Ehdr *hdr, Elf64_Sym *symbol, int is_local)
+char get_section_icon_64(Elf64_Ehdr *hdr, Elf64_Sym *symbol, int is_local)
 {
-    const char *sec_strtab = get_section_strtab(hdr);
+    const char *sec_strtab = get_section_strtab_64(hdr);
     Elf64_Shdr *shdr;
     const char *name;
     char c = 0;
 
-    if ((c = get_symbol_ndx_icon(symbol, is_local)))
+    if ((c = get_symbol_ndx_icon_64(symbol, is_local)))
         return c;
-    shdr = get_section_header(hdr, symbol->st_shndx);
-    name = get_section_name(shdr, sec_strtab);
-    if ((c = get_section_type_icon(shdr, is_local)))
+    shdr = get_section_header_64(hdr, symbol->st_shndx);
+    name = get_section_name_64(shdr, sec_strtab);
+    if ((c = get_section_type_icon_64(shdr, is_local)))
         return c;
     if (!strcmp(name, ".init_array") || !strcmp(name, ".fini_array"))
         return is_local ? 't' : 'T';

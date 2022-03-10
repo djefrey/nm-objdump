@@ -11,62 +11,6 @@
 #include "common.h"
 #include "objdump.h"
 
-const int FLAGS_NB = 9;
-
-const int FLAGS_VALUE[] = {
-    HAS_RELOC,
-    EXEC_P,
-    HAS_LINENO,
-    HAS_DEBUG,
-    HAS_SYMS,
-    HAS_LOCALS,
-    DYNAMIC,
-    WP_TEXT,
-    D_PAGED,
-};
-
-const char *FLAGS_NAME[] = {
-    "HAS_RELOC",
-    "EXEC_P",
-    "HAS_LINENO",
-    "HAS_DEBUG",
-    "HAS_SYMS",
-    "HAS_LOCALS",
-    "DYNAMIC",
-    "WP_TEXT",
-    "D_PAGED",
-};
-
-static void check_hdr_type(Elf64_Ehdr *hdr, int *flags)
-{
-    switch (hdr->e_type) {
-        case ET_EXEC:
-            *flags |= EXEC_P;
-            break;
-        case ET_DYN:
-            *flags |= DYNAMIC;
-            break;
-    }
-}
-
-static int get_flags(Elf64_Ehdr *hdr)
-{
-    int nb_sections = hdr->e_shnum;
-    int flags = 0;
-    Elf64_Shdr *shdr;
-
-    check_hdr_type(hdr, &flags);
-    for (int i = 0; i < nb_sections; i++) {
-        shdr = get_section_header(hdr, i);
-        if (shdr->sh_type == SHT_REL
-        || (!(flags & EXEC_P) && shdr->sh_type == SHT_RELA))
-            flags |= HAS_RELOC;
-        if (shdr->sh_type == SHT_SYMTAB)
-            flags |= HAS_SYMS;
-    }
-    return flags;
-}
-
 static void print_flags(int flags)
 {
     int first = 1;
@@ -82,10 +26,12 @@ static void print_flags(int flags)
 
 void print_infos(const char *name, Elf64_Ehdr *hdr)
 {
-    int flags = get_flags(hdr);
+    int flags = is_elf_64(hdr)
+    ? get_flags_64(hdr) : get_flags_32((Elf32_Ehdr*) hdr);
+    char *format = is_elf_64(hdr) ? "elf-x86-64" : "elf-x86";
 
-    printf("\n%s:     file format elf-x86-64\n", name);
-    printf("architecture: i386:x86-64, flags %0#8hx:\n", flags);
+    printf("\n%s:     file format %s\n", name, format);
+    printf("architecture: i386:x86-64, flags %0#10hx:\n", flags);
     print_flags(flags);
-    printf("start adress %0#16x\n\n", hdr->e_entry);
+    printf("start adress %0#19x\n\n", hdr->e_entry);
 }

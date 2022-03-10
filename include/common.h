@@ -29,15 +29,24 @@ int is_valid_archive(file_t *file);
 Elf64_Ehdr *get_elf_from_archive(ar_hdr_t *hdr);
 void extract_archive_name(char buf[17], ar_hdr_t *hdr);
 
-Elf64_Shdr *get_section_header(Elf64_Ehdr *hdr, Elf64_Half idx);
-const char *get_section_name(Elf64_Shdr *shdr, const char *sec_strtab);
-Elf64_Shdr *get_section_by_name(Elf64_Ehdr *hdr, const char *name);
+Elf32_Shdr *get_section_header_32(Elf32_Ehdr *hdr, Elf32_Half idx);
+const char *get_section_name_32(Elf32_Shdr *shdr, const char *sec_strtab);
+Elf32_Shdr *get_section_by_name_32(Elf32_Ehdr *hdr, const char *name);
 
-const char *get_section_strtab(Elf64_Ehdr *hdr);
-const char *get_strtab(Elf64_Ehdr *hdr);
+const char *get_section_strtab_32(Elf32_Ehdr *hdr);
+const char *get_strtab_32(Elf32_Ehdr *hdr);
+
+Elf64_Shdr *get_section_header_64(Elf64_Ehdr *hdr, Elf64_Half idx);
+const char *get_section_name_64(Elf64_Shdr *shdr, const char *sec_strtab);
+Elf64_Shdr *get_section_by_name_64(Elf64_Ehdr *hdr, const char *name);
+
+const char *get_section_strtab_64(Elf64_Ehdr *hdr);
+const char *get_strtab_64(Elf64_Ehdr *hdr);
 
 const char *get_program_name(void);
 
 void print_errno(const char *file);
 void print_no_such_file(const char *file);
 void print_invalid_format(const char *file);
+
+int is_elf_64(Elf64_Ehdr *hdr);

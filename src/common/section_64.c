@@ -9,7 +9,7 @@
 #include <string.h>
 #include "nm.h"
 
-Elf64_Shdr *get_section_header(Elf64_Ehdr *hdr, Elf64_Half idx)
+Elf64_Shdr *get_section_header_64(Elf64_Ehdr *hdr, Elf64_Half idx)
 {
     Elf64_Shdr *start_shdr = ((void*) hdr) + hdr->e_shoff;
 
@@ -20,22 +20,22 @@ Elf64_Shdr *get_section_header(Elf64_Ehdr *hdr, Elf64_Half idx)
     return &start_shdr[idx];
 }
 
-const char *get_section_name(Elf64_Shdr *shdr, const char *sec_strtab)
+const char *get_section_name_64(Elf64_Shdr *shdr, const char *sec_strtab)
 {
     if (shdr->sh_name == SHN_UNDEF)
         return NULL;
     return sec_strtab + shdr->sh_name;
 }
 
-Elf64_Shdr *get_section_by_name(Elf64_Ehdr *hdr, const char *name)
+Elf64_Shdr *get_section_by_name_64(Elf64_Ehdr *hdr, const char *name)
 {
-    const char *sec_strtab = get_section_strtab(hdr);
+    const char *sec_strtab = get_section_strtab_64(hdr);
     const char *shdr_name = NULL;
     Elf64_Shdr *shdr = NULL;
 
     for (Elf64_Half idx = 0; idx < hdr->e_shnum; idx++) {
-        shdr = get_section_header(hdr, idx);
-        shdr_name = get_section_name(shdr, sec_strtab);
+        shdr = get_section_header_64(hdr, idx);
+        shdr_name = get_section_name_64(shdr, sec_strtab);
         if (shdr_name != NULL && !strcmp(shdr_name, name))
             return shdr;
     }

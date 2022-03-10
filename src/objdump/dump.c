@@ -29,7 +29,7 @@ static void dump_line(char *data, uint addr, uint size)
     addr, hexa, hexa + 8, hexa + 16, hexa + 24, ascii);
 }
 
-static void dump_section(Elf64_Ehdr *hdr, Elf64_Shdr *shdr)
+static void dump_section_32(Elf32_Ehdr *hdr, Elf32_Shdr *shdr)
 {
     char *data = ((void*) hdr) + shdr->sh_offset;
     uint size = shdr->sh_size;
@@ -42,17 +42,47 @@ static void dump_section(Elf64_Ehdr *hdr, Elf64_Shdr *shdr)
     }
 }
 
-void dump_sections(Elf64_Ehdr *hdr)
+static void dump_section_64(Elf64_Ehdr *hdr, Elf64_Shdr *shdr)
 {
-    const char *sec_strtab = get_section_strtab(hdr);
+    char *data = ((void*) hdr) + shdr->sh_offset;
+    uint size = shdr->sh_size;
+
+    for (uint i = 0; i < size; i += 16) {
+        if (size - i >= 16)
+            dump_line(data, i, 16);
+        else
+            dump_line(data, i, size - i);
+    }
+}
+
+void dump_sections_32(Elf32_Ehdr *hdr)
+{
+    const char *sec_strtab = get_section_strtab_32(hdr);
+    size_t sec_nb = hdr->e_shnum;
+    Elf32_Shdr *shdr;
+
+    for (size_t i = 0; i < sec_nb; i++) {
+        shdr = get_section_header_32(hdr, i);
+        if (shdr->sh_size == 0 || shdr->sh_type == SHT_NOBITS)
+            continue;
+        printf("Contends of section %s:\n",
+        get_section_name_32(shdr, sec_strtab));
+        dump_section_32(hdr, shdr);
+    }
+}
+
+void dump_sections_64(Elf64_Ehdr *hdr)
+{
+    const char *sec_strtab = get_section_strtab_64(hdr);
     size_t sec_nb = hdr->e_shnum;
     Elf64_Shdr *shdr;
 
     for (size_t i = 0; i < sec_nb; i++) {
-        shdr = get_section_header(hdr, i);
+        shdr = get_section_header_64(hdr, i);
         if (shdr->sh_size == 0 || shdr->sh_type == SHT_NOBITS)
             continue;
-        printf("Contends of section %s:\n", get_section_name(shdr, sec_strtab));
-        dump_section(hdr, shdr);
+        printf("Contends of section %s:\n",
+        get_section_name_64(shdr, sec_strtab));
+        dump_section_64(hdr, shdr);
     }
 }

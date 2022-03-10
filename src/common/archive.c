@@ -40,7 +40,7 @@ list_t *get_archive_files(file_t *file)
     list_t *list = NULL;
     ar_hdr_t *hdr = file->data + SARMAG;
 
-    while (hdr < (file->data + file->size)) {
+    while ((void*) hdr < (file->data + file->size)) {
         create_list(&list, hdr);
         hdr = get_next_ar_header(hdr);
     }

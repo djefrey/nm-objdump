@@ -7,19 +7,28 @@
 
 COMMON_SRC			=	src/common/elf.c				\
 						src/common/archive.c			\
-						src/common/section.c			\
+						src/common/section_32.c			\
+						src/common/section_64.c			\
 						src/common/strtab.c				\
 						src/common/error.c
 
 NM_SRC				=	src/nm/main.c					\
-						src/nm/symbols.c				\
-						src/nm/icon.c					\
-						src/nm/icon_2.c					\
+						src/nm/nm.c						\
+						src/nm/symbols_32.c				\
+						src/nm/symbols_64.c				\
+						src/nm/icon_32.c				\
+						src/nm/icon_64.c				\
+						src/nm/icon_section_32.c		\
+						src/nm/icon_section_64.c		\
+						src/nm/sections.c				\
 						src/nm/name.c
 
 OBJDUMP_SRC			=	src/objdump/main.c				\
+						src/objdump/objdump.c			\
 						src/objdump/infos.c				\
 						src/objdump/dump.c				\
+						src/objdump/flags_32.c			\
+						src/objdump/flags_64.c			\
 						src/objdump/name.c
 
 INC_DIR				=	./include
