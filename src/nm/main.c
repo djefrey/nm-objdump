@@ -5,6 +5,7 @@
 ** main
 */
 
+#include <locale.h>
 #include <stdio.h>
 #include <string.h>
 #include "nm.h"
@@ -12,6 +13,9 @@
 
 int main(int ac, const char **av)
 {
+    setlocale(LC_MESSAGES, "");
+    setlocale (LC_CTYPE, "");
+    setlocale (LC_COLLATE, "");
     if (ac == 1)
         return my_nm("a.out");
     else

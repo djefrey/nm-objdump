@@ -14,12 +14,8 @@ static int symbol_cmp_64(symbol_data_64_t *sym1, symbol_data_64_t *sym2)
 {
     const char *str1 = sym1->name;
     const char *str2 = sym2->name;
-    int cmp;
 
-    for (; *str1 && *str1 == '_'; str1++);
-    for (; *str2 && *str2 == '_'; str2++);
-    cmp = strcasecmp(str1, str2);
-    return cmp != 0 ? cmp : strcasecmp(sym1->name, sym2->name);
+    return strcoll(str1, str2);
 }
 
 void print_symbols_from_elf_64(Elf64_Ehdr *hdr)

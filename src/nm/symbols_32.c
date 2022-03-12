@@ -14,12 +14,8 @@ static int symbol_cmp_32(symbol_data_32_t *sym1, symbol_data_32_t *sym2)
 {
     const char *str1 = sym1->name;
     const char *str2 = sym2->name;
-    int cmp;
 
-    for (; *str1 && *str1 == '_'; str1++);
-    for (; *str2 && *str2 == '_'; str2++);
-    cmp = strcasecmp(str1, str2);
-    return cmp != 0 ? cmp : strcasecmp(sym1->name, sym2->name);
+    return strcoll(str1, str2);
 }
 
 void print_symbols_from_elf_32(Elf32_Ehdr *hdr)
@@ -63,7 +59,7 @@ void print_symbols_32(Elf32_Ehdr *hdr, list_t *symbols)
         if (symdata->symbol->st_value == 0 && (icon != 't' && icon != 'T'))
             printf("                 %c %s\n", icon, symdata->name);
         else
-            printf("%016x %c %s\n", symdata->symbol->st_value,
+            printf("%08x %c %s\n", symdata->symbol->st_value,
             icon, symdata->name);
     }
 }
