@@ -5,6 +5,7 @@
 ** elf
 */
 
+#include <stdint.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <fcntl.h>
@@ -39,7 +40,7 @@ void close_file(file_t *file)
 
 int is_valid_elf(void *file)
 {
-    u_char *magic = ((Elf64_Ehdr*) file)->e_ident;
+    uint8_t *magic = ((Elf64_Ehdr*) file)->e_ident;
 
     return (magic[0] == ELFMAG0 && magic[1] == ELFMAG1
          && magic[2] == ELFMAG2 && magic[3] == ELFMAG3
