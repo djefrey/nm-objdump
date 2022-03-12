@@ -20,6 +20,8 @@ int get_flags_32(Elf32_Ehdr *hdr);
 void dump_sections_64(Elf64_Ehdr *hdr);
 int get_flags_64(Elf64_Ehdr *hdr);
 
+int get_addr_size(uint64_t addr);
+
 extern const int FLAGS_NB;
 extern const int FLAGS_VALUE[];
 extern const char *FLAGS_NAME[];

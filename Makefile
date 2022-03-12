@@ -29,6 +29,7 @@ OBJDUMP_SRC			=	src/objdump/main.c				\
 						src/objdump/dump.c				\
 						src/objdump/flags_32.c			\
 						src/objdump/flags_64.c			\
+						src/objdump/utils.c				\
 						src/objdump/name.c
 
 INC_DIR				=	./include

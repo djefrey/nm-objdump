@@ -28,10 +28,14 @@ void print_infos(const char *name, Elf64_Ehdr *hdr)
 {
     int flags = is_elf_64(hdr)
     ? get_flags_64(hdr) : get_flags_32((Elf32_Ehdr*) hdr);
-    char *format = is_elf_64(hdr) ? "elf-x86-64" : "elf-x86";
+    char *format = is_elf_64(hdr) ? "elf64-x86-64" : "elf32-i386";
+    char *arch = is_elf_64(hdr) ? "i386:x86-64" : "i386";
 
     printf("\n%s:     file format %s\n", name, format);
-    printf("architecture: i386:x86-64, flags %0#10hx:\n", flags);
+    printf("architecture: %s, flags %0#10hx:\n", arch, flags);
     print_flags(flags);
-    printf("start adress %0#19x\n\n", hdr->e_entry);
+    if (is_elf_64(hdr))
+        printf("start address %0#18x\n\n", hdr->e_entry);
+    else
+        printf("start address %0#10x\n\n", hdr->e_entry);
 }
