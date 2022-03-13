@@ -24,7 +24,7 @@ static char get_bind_icon_64(Elf64_Sym *symbol, int is_local)
 static char get_type_icon_64(Elf64_Sym *symbol, int is_local)
 {
     if (ELF64_ST_TYPE(symbol->st_info) == STT_OBJECT
-     || ELF64_ST_TYPE(symbol->st_info) == STT_NOTYPE)
+    || ELF64_ST_TYPE(symbol->st_info) == STT_NOTYPE)
         return is_local ? 'd' : 'D';
     if (ELF64_ST_TYPE(symbol->st_info) == STT_FUNC)
         return is_local ? 't' : 'T';
@@ -37,8 +37,8 @@ char get_symbol_icon_64(Elf64_Ehdr *hdr, Elf64_Sym *symbol)
     char icon = 0;
 
     if ((icon = get_bind_icon_64(symbol, is_local))
-     || (icon = get_section_icon_64(hdr, symbol, is_local))
-     || (icon = get_type_icon_64(symbol, is_local)))
+    || (icon = get_section_icon_64(hdr, symbol, is_local))
+    || (icon = get_type_icon_64(symbol, is_local)))
         return icon;
     return '?';
 }

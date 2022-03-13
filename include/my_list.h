@@ -5,8 +5,7 @@
 ** header file for linked list
 */
 
-#ifndef MY_LIST_H
-#define MY_LIST_H
+#pragma once
 
 typedef  struct  list {
     void *data;
@@ -29,5 +28,3 @@ list_t *get_smallest(list_t *cursor, int (*cmp)());
 list_t *get_prev(list_t *element, list_t *list);
 void move_element(list_t *element, list_t *cursor, list_t *list);
 void my_sort_list(list_t **begin, int (*cmp)());
-
-#endif

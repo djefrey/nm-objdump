@@ -34,19 +34,26 @@ static char get_symbol_ndx_icon_64(Elf64_Sym *symbol, int is_local)
     return 0;
 }
 
+static char check_section_flags_bss_64(Elf64_Shdr *shdr, int is_local)
+{
+    if (shdr->sh_flags == SHF_ALLOC | SHF_WRITE)
+        return is_local ? 'b' : 'B';
+    return 0;
+}
+
+
 static char get_section_type_icon_64(Elf64_Shdr *shdr, int is_local)
 {
     switch (shdr->sh_type) {
         case SHT_DYNAMIC:
             return is_local ? 'd' : 'D';
         case SHT_NOBITS:
-            if (shdr->sh_flags == SHF_ALLOC | SHF_WRITE)
-                return is_local ? 'b' : 'B';
-            break;
+            return check_section_flags_bss_64(shdr, is_local);
         case SHT_PROGBITS:
             return get_section_progbits_icon_64(shdr, is_local);
+        default:
+            return 0;
     }
-    return 0;
 }
 
 char get_section_icon_64(Elf64_Ehdr *hdr, Elf64_Sym *symbol, int is_local)
