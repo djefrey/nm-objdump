@@ -41,7 +41,6 @@ static char check_section_flags_bss_64(Elf64_Shdr *shdr, int is_local)
     return 0;
 }
 
-
 static char get_section_type_icon_64(Elf64_Shdr *shdr, int is_local)
 {
     switch (shdr->sh_type) {
